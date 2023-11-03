@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Tarefas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Tarefas</h1>
+
+        <form method="post" asp-controller="Tasks" asp-action="AddTask" class="form-inline">
+            <input type="text" name="title" placeholder="Nova Tarefa" required class="form-control mr-2" />
+            <button type="submit" class="btn btn-primary">Adicionar</button>
+        </form>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Concluída</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var task in Model)
+                {
+                    <tr>
+                        <td>@task.Title</td>
+                        <td>
+                            <input type="checkbox" asp-controller="Tasks" asp-action="ToggleTask" asp-route-id="@task.Id" @(task.IsCompleted ? "checked" : "") />
+                        </td>
+                        <td>
+                            <a asp-controller="Tasks" asp-action="DeleteTask" asp-route-id="@task.Id" class="btn btn-danger">Remover</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
